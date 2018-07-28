@@ -1,6 +1,9 @@
 import random
 import torchvision.transforms as transforms
 
+# Reference:
+#     https://github.com/kuangliu/torchcv/tree/master/torchcv/transforms
+
 def random_distort(
     img,
     brightness_delta=32/255.,

@@ -192,7 +192,7 @@ class VGG16(nn.Module):
         return outs
 
 
-class SSD300(nn.Module):
+class SSD224(nn.Module):
     # Each feature corresponds to n pixels s.t.
     #       n_features * feature_to_n_pixels ~= 224
     feature_to_n_pixels = (16, 32, 45, 75, 224)
@@ -201,7 +201,7 @@ class SSD300(nn.Module):
     aspect_ratios = ((2,), (2, 3), (2, 3), (2, 3), (2,))
 
     def __init__(self, num_classes):
-        super(SSD300, self).__init__()
+        super(SSD224, self).__init__()
         self.n_classes = num_classes
         #    n_anchors increases respect to `aspect_ratios`
         self.n_anchors = (4, 6, 6, 6, 4, 4)

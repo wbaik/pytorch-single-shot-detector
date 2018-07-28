@@ -3,6 +3,8 @@ import random
 
 from PIL import Image
 
+# Reference:
+#     https://github.com/kuangliu/torchcv/tree/master/torchcv/transforms
 
 def scale_jitter(img, boxes, sizes, max_size=1400):
     '''Randomly scale image shorter side to one of the sizes.

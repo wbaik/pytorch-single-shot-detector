@@ -12,9 +12,11 @@ def _if_tensor_to_numpy(given):
     return given.numpy() if torch.is_tensor(given) else given.copy()
 
 
+# Reference:
+#     https://github.com/chainer/chainercv/blob/master/chainercv/utils/bbox/
+#     https://github.com/kuangliu/torchcv/blob/master/torchcv/utils/
 def box_clamp(boxes, xmin, ymin, xmax, ymax):
-    '''Clamp boxes.
-
+    '''
     Args:
       boxes: (tensor) bounding boxes of (xmin,ymin,xmax,ymax), sized [N,4].
       xmin: (number) min value of x.

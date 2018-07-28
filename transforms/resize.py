@@ -3,6 +3,8 @@ import random
 
 from PIL import Image
 
+# Reference:
+#     https://github.com/kuangliu/torchcv/tree/master/torchcv/transforms
 
 def resize(img, boxes, size, max_size=1000, random_interpolation=False):
     '''Resize the input PIL image to given size.

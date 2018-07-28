@@ -2,32 +2,33 @@ import torch
 import torch.nn.functional as F
 from torchvision import transforms
 
-
 from PIL import Image, ImageDraw
 from src import SSDBoxCoder
 
 
-net = torch.load('./ssd.pth')
-net.eval()
+if __name__ == '__main__':
 
-img = Image.open('./images/000084.jpg')
-img = img.resize((224, 224))
+    net = torch.load('./ssd.pth')
+    net.eval()
 
-transform = transforms.Compose([
-    transforms.ToTensor()
-])
+    img = Image.open('./images/000084.jpg')
+    img = img.resize((224, 224))
 
-x = transform(img)
-loc_preds, cls_preds = net(x.unsqueeze(0))
+    transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+    ])
 
-print('Decoding..')
-box_coder = SSDBoxCoder(net)
-boxes, labels, scores = box_coder.decode(
-    loc_preds.data.squeeze(), F.softmax(cls_preds.squeeze(), dim=1).data, 0.15)
-print(labels)
-print(scores)
+    x = transform(img)
+    loc_preds, cls_preds = net(x.unsqueeze(0))
 
-draw = ImageDraw.Draw(img)
-for box in boxes:
-    draw.rectangle(list(box), outline='red')
-img.show()
+    box_coder = SSDBoxCoder(net)
+    boxes, labels, scores = box_coder.decode(
+        loc_preds.data.squeeze(), F.softmax(cls_preds.squeeze(), dim=1).data, 0.15)
+    print(labels)
+    print(scores)
+
+    draw = ImageDraw.Draw(img)
+    for box in boxes:
+        draw.rectangle(list(box), outline='red')
+    img.show()

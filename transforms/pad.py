@@ -1,5 +1,7 @@
 from PIL import Image
 
+# Reference:
+#     https://github.com/kuangliu/torchcv/tree/master/torchcv/transforms
 
 def pad(img, target_size):
     '''Pad image with zeros to the specified size.

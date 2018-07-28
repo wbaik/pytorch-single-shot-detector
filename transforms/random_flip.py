@@ -2,6 +2,8 @@ import random
 
 from PIL import Image
 
+# Reference:
+#     https://github.com/kuangliu/torchcv/tree/master/torchcv/transforms
 
 def random_flip(img, boxes):
     '''Randomly flip PIL image.

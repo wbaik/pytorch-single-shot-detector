@@ -3,6 +3,8 @@ import random
 
 from PIL import Image
 
+# Reference:
+#     https://github.com/kuangliu/torchcv/tree/master/torchcv/transforms
 
 def random_paste(img, boxes, max_ratio=4, fill=0):
     '''Randomly paste the input image on a larger canvas.

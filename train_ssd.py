@@ -1,14 +1,17 @@
 import torch
 import torch.optim as optim
 
-from src import SSD300, SSDLoss, train_model
+from src import SSD224, SSDLoss, train_model
 
 
 def train():
     try:
-        ssd = torch.load('./ssd_.pth').cuda()
-    except:
-        ssd = SSD300(21).float().cuda()
+        ssd = torch.load('./ssd.pth').cuda()
+    except Exception as inst:
+        print('Exception Raised: {}'.format(type(inst)))
+        print('inst.args : {}'.format(inst.args))
+        print('inst: {}'.format(inst))
+        ssd = SSD224(21).float().cuda()
 
     loss_fn = SSDLoss(21)
 

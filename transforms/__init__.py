@@ -1,3 +1,5 @@
+# Reference:
+#     https://github.com/kuangliu/torchcv/tree/master/torchcv/transforms
 from transforms.pad import pad
 from transforms.resize import resize
 from transforms.random_flip import random_flip

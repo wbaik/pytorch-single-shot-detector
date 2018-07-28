@@ -7,6 +7,8 @@ import random
 
 from src import box_iou, box_clamp
 
+# Reference:
+#     https://github.com/kuangliu/torchcv/tree/master/torchcv/transforms
 
 def random_crop(
         img, boxes, labels,

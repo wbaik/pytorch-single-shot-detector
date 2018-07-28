@@ -4,7 +4,7 @@ from torchvision import transforms
 
 
 from PIL import Image, ImageDraw
-from src.box_coder import SSDBoxCoder
+from src import SSDBoxCoder
 
 
 net = torch.load('./ssd.pth')

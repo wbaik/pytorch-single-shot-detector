@@ -6,7 +6,6 @@ import PIL.Image as Image
 
 from chainercv.chainer_experimental.datasets.sliceable import GetterDataset
 from chainercv.datasets.voc import voc_utils
-from chainercv.utils import read_image
 
 
 class VOCBboxDataset(GetterDataset):

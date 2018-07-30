@@ -42,24 +42,24 @@ def random_crop(
             x = random.randrange(imw - w)
             y = random.randrange(imh - h)
 
-            roi = torch.Tensor([[x,y,x+w,y+h]])
+            roi = torch.Tensor([[x, y, x+w, y+h]])
             ious = box_iou(boxes, roi)
             if ious.min() >= min_iou:
-                params.append((x,y,w,h))
+                params.append((x, y, w, h))
                 break
 
-    x,y,w,h = random.choice(params)
-    img = img.crop((x,y,x+w,y+h))
+    x, y, w, h = random.choice(params)
+    img = img.crop((x, y, x+w, y+h))
 
-    center = (boxes[:,:2] + boxes[:,2:]) / 2
-    mask = (center[:,0]>=x) & (center[:,0]<=x+w) \
-         & (center[:,1]>=y) & (center[:,1]<=y+h)
+    center = (boxes[:, :2] + boxes[:, 2:]) / 2
+    mask = (center[:, 0] >= x) & (center[:, 0] <= x+w) \
+         & (center[:, 1] >= y) & (center[:, 1] <= y+h)
 
     if mask.any():
-        boxes = boxes[mask] - torch.Tensor([x,y,x,y])
-        boxes = box_clamp(boxes,0,0,w,h)
+        boxes = boxes[mask] - torch.Tensor([x, y, x, y])
+        boxes = box_clamp(boxes, 0, 0, w, h)
         labels = labels[mask]
     else:
-        boxes = torch.Tensor([[0,0,0,0]])
+        boxes = torch.Tensor([[0, 0, 0, 0]])
         labels = torch.LongTensor([0])
     return img, boxes, labels

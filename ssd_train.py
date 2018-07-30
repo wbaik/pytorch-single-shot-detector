@@ -1,6 +1,8 @@
 import torch
 import torch.optim as optim
 
+import numpy as np
+
 from src import SSD224, SSDLoss, train_model
 
 
@@ -15,10 +17,16 @@ def train():
 
     loss_fn = SSDLoss(21)
 
-    optimizer_fn = optim.SGD(ssd.parameters(), lr=0.0005, momentum=0.9, weight_decay=1e-6)
-    exp_lr_scheduler = optim.lr_scheduler.StepLR(optimizer_fn, step_size=7, gamma=0.1)
+    optimizer_fn = optim.SGD(ssd.parameters(),
+                             lr=0.0002, momentum=0.9, weight_decay=1e-7)
 
-    train_model(ssd, loss_fn, optimizer_fn, exp_lr_scheduler, 14)
+    def sin_lr(x):
+        return np.abs(np.sin((x + 0.01) * 0.2))
+
+    exp_lr_scheduler = optim.lr_scheduler.LambdaLR(optimizer_fn,
+                                                   lr_lambda=[sin_lr])
+
+    train_model(ssd, loss_fn, optimizer_fn, exp_lr_scheduler, 30)
 
     ssd = ssd.cpu()
     torch.save(ssd, './ssd.pth')

@@ -27,10 +27,10 @@ def box_clamp(boxes, xmin, ymin, xmax, ymax):
     Returns:
       (tensor) clamped boxes.
     '''
-    boxes[:,0].clamp_(min=xmin, max=xmax)
-    boxes[:,1].clamp_(min=ymin, max=ymax)
-    boxes[:,2].clamp_(min=xmin, max=xmax)
-    boxes[:,3].clamp_(min=ymin, max=ymax)
+    boxes[:, 0].clamp_(min=xmin, max=xmax)
+    boxes[:, 1].clamp_(min=ymin, max=ymax)
+    boxes[:, 2].clamp_(min=xmin, max=xmax)
+    boxes[:, 3].clamp_(min=ymin, max=ymax)
     return boxes
 
 
@@ -129,8 +129,8 @@ def box_nms(bboxes, scores, threshold=0.5):
         xx2 = x2[order[1:]].clamp(max=x2[i].item())
         yy2 = y2[order[1:]].clamp(max=y2[i].item())
 
-        w = (xx2-xx1).clamp(min=0)
-        h = (yy2-yy1).clamp(min=0)
+        w = (xx2 - xx1).clamp(min=0)
+        h = (yy2 - yy1).clamp(min=0)
         inter = w * h
 
         overlap = inter / (areas[i] + areas[order[1:]] - inter)

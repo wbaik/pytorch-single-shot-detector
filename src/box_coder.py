@@ -2,7 +2,7 @@ import torch
 import itertools
 import math
 
-from src.utils import change_box_order, box_iou, box_nms, _if_numpy_to_tensor
+from src import change_box_order, box_iou, box_nms, _if_numpy_to_tensor
 
 
 class SSDBoxCoder:
@@ -61,7 +61,7 @@ class SSDBoxCoder:
         def argmax(x):
             v, i = x.max(0)
             j = v.max(0)[1][0]
-            return (i[j], j)
+            return i[j], j
 
         default_boxes = self.default_boxes  # xywh
         default_boxes = change_box_order(default_boxes, 'xywh2xyxy')
@@ -77,13 +77,13 @@ class SSDBoxCoder:
         masked_ious = ious.clone()
         while True:
             i, j = argmax(masked_ious)
-            if masked_ious[i,j] < 1e-6:
+            if masked_ious[i, j] < 1e-6:
                 break
             index[i] = j
-            masked_ious[i,:] = 0
-            masked_ious[:,j] = 0
+            masked_ious[i, :] = 0
+            masked_ious[:, j] = 0
 
-        mask = (index<0) & (ious.max(1)[0]>=threshold)
+        mask = (index < 0) & (ious.max(1)[0] >= threshold)
         if mask.any():
             try:
                 index[mask] = ious[mask.nonzero().squeeze()].max(1)[1]
@@ -95,18 +95,18 @@ class SSDBoxCoder:
         default_boxes = change_box_order(default_boxes, 'xyxy2xywh')
 
         variances = (0.1, 0.2)
-        loc_xy = (boxes[:,:2]-default_boxes[:,:2]) / default_boxes[:,2:] / variances[0]
-        loc_wh = torch.log(boxes[:,2:]/default_boxes[:,2:]) / variances[1]
-        loc_targets = torch.cat([loc_xy,loc_wh], 1)
+        loc_xy = (boxes[:, :2]-default_boxes[:, :2]) / default_boxes[:, 2:] / variances[0]
+        loc_wh = torch.log(boxes[:, 2:]/default_boxes[:, 2:]) / variances[1]
+        loc_targets = torch.cat([loc_xy, loc_wh], 1)
         cls_targets = 1 + labels[index.clamp(min=0)]
-        cls_targets[index<0] = 0
+        cls_targets[index < 0] = 0
         return loc_targets, cls_targets
 
     def decode(self, loc_preds, cls_preds, score_thresh=0.63, nms_thresh=0.4):
         '''Decode predicted loc/cls back to real box locations and class labels.
 
         Args:
-          loc_preds: (tensor) predicted loc, sized [8732,4].
+          loc_preds: (tensor) predicted loc,  sized [8732,4].
           cls_preds: (tensor) predicted conf, sized [8732,21].
           score_thresh: (float) threshold for object confidence score.
           nms_thresh: (float) threshold for box nms.
@@ -116,9 +116,9 @@ class SSDBoxCoder:
           labels: (tensor) class labels, sized [#obj,].
         '''
         variances = (0.1, 0.2)
-        xy = loc_preds[:,:2] * variances[0] * self.default_boxes[:,2:] + self.default_boxes[:,:2]
-        wh = torch.exp(loc_preds[:,2:]*variances[1]) * self.default_boxes[:,2:]
-        box_preds = torch.cat([xy-wh/2, xy+wh/2], 1)
+        xy = loc_preds[:, :2] * variances[0] * self.default_boxes[:, 2:] + self.default_boxes[:, :2]
+        wh = torch.exp(loc_preds[:, 2:] * variances[1]) * self.default_boxes[:, 2:]
+        box_preds = torch.cat([xy - wh/2, xy + wh/2], 1)
 
         boxes = []
         labels = []

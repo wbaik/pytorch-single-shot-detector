@@ -1,4 +1,5 @@
-import functools, random
+import functools
+import random
 import numpy as np
 
 import torch
@@ -49,14 +50,15 @@ def transform_image_w_bbox(img, boxes, labels, img_size=224):
     assert torch.is_tensor(boxes), 'type(boxes) : {}'.format(type(boxes))
 
     img = random_distort(img)
-    if random.random() < 0.5:
-        img, boxes = random_paste(img, boxes, max_ratio=4, fill=(123,116,103))
+    # This slows down learning too much...
+    # if random.random() < 0.5:
+    #     img, boxes = random_paste(img, boxes, max_ratio=4, fill=(123, 116, 103))
     img, boxes, labels = random_crop(img, boxes, labels)
     img, boxes = resize(img, boxes, size=(img_size, img_size), random_interpolation=True)
     img, boxes = random_flip(img, boxes)
     img = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize((0.485,0.456,0.406), (0.229,0.224,0.225))
+        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
     ])(img)
     return img, boxes, labels
 

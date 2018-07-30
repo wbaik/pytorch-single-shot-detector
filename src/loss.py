@@ -10,11 +10,13 @@ class SSDLoss(nn.Module):
         super(SSDLoss, self).__init__()
         self.n_classes = n_classes
 
-    def _hard_negative_mining(self, cls_loss, pos):
-        '''Return negative indices that is 3x the number as postive indices.
+    def _hard_negative_mining(self, cls_loss, pos, s=3):
+        '''
+        Return negative indices that is s times the number as positive indices.
+        Originally from the SSD Paper(arXiv:1512.02325v5), s = 3.
 
         Args:
-          cls_loss: (tensor) cross entroy loss between cls_preds and cls_targets, sized [N, #anchors].
+          cls_loss: (tensor) cross entropy loss between cls_preds and cls_targets, sized [N, #anchors].
           pos: (tensor) positive class mask, sized [N, #anchors].
 
         Return:
@@ -25,7 +27,7 @@ class SSDLoss(nn.Module):
         _, idx = cls_loss.sort(1)   # sort by negative losses
         _, rank = idx.sort(1)       # [N, #anchors]
 
-        num_neg = 3 * pos.sum(1)    # [N,]
+        num_neg = s * pos.sum(1)    # [N,]
         return rank < num_neg[:, None]
 
     def forward(self, loc_preds, loc_targets, cls_preds, cls_targets):
@@ -53,7 +55,7 @@ class SSDLoss(nn.Module):
         cls_loss = cls_loss.view(batch_size, -1)
         cls_loss[cls_targets < 0] = 0                                   # set ignored loss to 0
 
-        neg = self._hard_negative_mining(cls_loss, pos)                 # [N, #anchors]
+        neg = self._hard_negative_mining(cls_loss, pos, 3)              # [N, #anchors]
         cls_loss = cls_loss[pos | neg].sum()
 
         print('| loc_loss: {:.3f} | cls_loss: {:.3f} |'.format(

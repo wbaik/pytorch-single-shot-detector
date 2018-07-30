@@ -174,7 +174,6 @@ class VGG16(nn.Module):
             nn.Conv2d(128, 256, 3), nn.ReLU(),
         )
 
-
     def forward(self, x):
         outs = []
         x = self.s1(x) # 14x14

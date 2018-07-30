@@ -35,4 +35,5 @@ There has been a number of implementations for SSD. These are some of the
 implementations I have used to learn the details of original SSD.
 
 [chainercv](http://chainercv.readthedocs.io/en/stable/)
+
 [torchcv](https://github.com/kuangliu/torchcv)

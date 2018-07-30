@@ -27,8 +27,8 @@ python ssd_detect.py
 ```
 
 Few results after some training:
-![sample_pic](/images/Figure_1-10.png)
-![sample_pic](/images/Figure_1-11.png)
+![sample_pic](/images/Figure_1-12.png)
+![sample_pic](/images/Figure_1-13.png)
 
 ### Credit
 There has been a number of implementations for SSD. These are some of the

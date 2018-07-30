@@ -16,7 +16,7 @@ net = torch.load('./ssd.pth')
 net.eval()
 
 def get_instance(img, transform, box_coder,
-                  sizes=(224,224), CLS_SCORE=0.25):
+                  sizes=(224,224), CLS_SCORE=0.3):
     '''
     :param img: PIL.Image object of an image
     :param transform: torchvision.transforms.Compose

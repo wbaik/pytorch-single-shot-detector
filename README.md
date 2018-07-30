@@ -32,7 +32,8 @@ Few results after some training:
 
 ### Credit
 There has been a number of implementations for SSD. These are some of the
-implementations I have used to learn the details of original SSD.
+implementations I have used to learn the details of the original SSD.
+`chainercv` relies on its own framework, where as `torchcv` relies on `pytorch`.
 
 [chainercv](http://chainercv.readthedocs.io/en/stable/)
 

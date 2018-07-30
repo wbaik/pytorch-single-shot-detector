@@ -30,4 +30,9 @@ Few results after some training:
 ![sample_pic](/images/Figure_1-10.png)
 ![sample_pic](/images/Figure_1-11.png)
 
+### Credit
+There has been a number of implementations for SSD. These are some of the
+implementations I have used to learn the details of original SSD.
 
+[chainercv](http://chainercv.readthedocs.io/en/stable/)
+[torchcv](https://github.com/kuangliu/torchcv)

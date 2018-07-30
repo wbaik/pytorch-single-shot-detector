@@ -27,7 +27,7 @@ python ssd_detect.py
 ```
 
 Few results after some training:
-![sample_pic]('./images/Figure_1-10.png')
-![sample_pic]('./images/Figure_1-11.png')
+![sample_pic]('/images/Figure_1-10.png')
+![sample_pic]('/images/Figure_1-11.png')
 
 

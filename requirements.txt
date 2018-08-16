@@ -12,7 +12,6 @@ certifi=2018.4.16=py36_0
 cffi=1.11.5=py36h9745a5d_0
 chainer=4.2.0=py36_0
 chardet=3.0.4=py36_1
-cryptography=2.2.2=py36h14c3975_0
 cuda91=1.0=h4c16780_0
 dbus=1.13.0=h3a4f0e9_0
 decorator=4.3.0=py36_0

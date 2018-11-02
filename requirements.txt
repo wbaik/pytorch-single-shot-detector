@@ -108,7 +108,7 @@ pytorch=0.4.0=py36_cuda9.1.85_cudnn7.1.2_1
 pyzmq=17.0.0=py36h14c3975_3
 qt=4.8.7=4
 readline=7.0=ha6073c6_4
-requests=2.19.1=py36_0
+requests=2.20.1=py36_0
 send2trash=1.5.0=py36_0
 setuptools=39.2.0=py36_0
 simplegeneric=0.8.1=py36_2
